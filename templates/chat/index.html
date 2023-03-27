@@ -32,13 +32,13 @@
         </div>
         {% if has_room_id %}
             <div class="select">
-                <form action="" method="post">
+                <form id="form">
                     {% csrf_token %}
                     <input type="text" name="room_id" placeholder="Enter Room Id"><br>
                     <input type="text" name="name" placeholder="Enter your username"> <br>
                     <input type="submit" value="Join">
                 </form>
-            </div>
+            </div>          
         {% endif %}
         <div class="info">
             <p>In Production the room Id will sent to the patient and doctors through their email.</p>
@@ -48,6 +48,23 @@
     </div>
 </body>
 <script>
-    let 
+    let form = document.getElementById('form')
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+
+        let room = e.target.room_id.value
+        let name = e.target.name.value
+        
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        sessionStorage.setItem('name', name)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('uid', data.uid)
+        sessionStorage.setItem('token', data.token)
+
+        window.open('/room/', '_self')
+    }
+    form.addEventListener('submit', handleSubmit)
 </script>
 </html>

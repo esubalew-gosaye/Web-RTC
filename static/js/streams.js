@@ -35,7 +35,7 @@ let joinAndDisplayLS = async () => {
 
     localTracks[1].play(`user-${UID}`)
     localTracks[0].play()
-
+pip
     await client.publish([localTracks[0], localTracks[1]])
 }
 

@@ -15,10 +15,16 @@
         </div>
         <div class="selection">
             <div class="select" id="room-id">
-                <a href="">I need a room ID</a>
+                <a href="?q=room_id">I need a room ID</a>
             </div>
             <div class="select" id="room-id">
-                <span>: AuXman</span>
+                <span>:
+                    {% if room_id %}
+                        {{ room_id }}
+                    {% else %}
+                        ROOM_ID HERE
+                    {% endif %}
+                </span>
             </div>
         </div>
         <div class="select">

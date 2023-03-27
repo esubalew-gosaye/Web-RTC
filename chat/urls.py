@@ -5,4 +5,5 @@ app_name = 'chat'
 urlpatterns = [
     path('', views.index, name='index'),
     path('room/', views.room, name='room'),
+    path('get_token/', views.getToken, name='room'),
 ]

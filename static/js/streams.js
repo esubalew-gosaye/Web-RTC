@@ -100,6 +100,7 @@ let toggleMic = async (e) => {
 }
 
 joinAndDisplayLS()
+
 document.getElementById("leave-btn").addEventListener("click", leaveAndRemoveLS)
 document.getElementById("camera-btn").addEventListener("click", toggleCamera)
 document.getElementById("mic-btn").addEventListener("click", toggleMic)

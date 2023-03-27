@@ -34,6 +34,7 @@ let joinAndDisplayLS = async () => {
     document.getElementById("video-streams").insertAdjacentHTML("beforeend", player)
 
     localTracks[1].play(`user-${UID}`)
+    localTracks[0].play()
 
     await client.publish([localTracks[0], localTracks[1]])
 }

@@ -9,6 +9,10 @@ def index(request):
             # Generate a random string of 8 characters
             room_id = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabc', k=8))
             context['room_id'] = room_id
+            
+        if request.GET.get('q') == 'has_room':
+            context['has_room_id'] = True
+
     return render(request, 'chat/index.html', context=context)
 
 def room(request):

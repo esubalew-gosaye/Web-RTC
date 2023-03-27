@@ -28,9 +28,18 @@
             </div>
         </div>
         <div class="select">
-            <a href="">I have already a room ID</a>
+            <a href="?q=has_room">I have already a room ID</a>
         </div>
-
+        {% if has_room_id %}
+            <div class="select">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="room_id" placeholder="Enter Room Id"><br>
+                    <input type="text" name="name" placeholder="Enter your username"> <br>
+                    <input type="submit" value="Join">
+                </form>
+            </div>
+        {% endif %}
         <div class="info">
             <p>In Production the room Id will sent to the patient and doctors through their email.</p>
             <p>If you are new comer press <b>I need a room Id</b> it will generate room id for you</p>

@@ -33,3 +33,12 @@ body{
     font-size: 16px;
     font-family: monospace;
 }
+form {
+    margin-top: 50px;
+    text-align: center;
+
+}
+form input{
+    margin-top: 20px;
+    padding: 5px 10px;
+}

@@ -1,8 +1,12 @@
 from django.shortcuts import render
-import random
 from agora_token_builder import RtcTokenBuilder
 from django.http import JsonResponse 
+from django.views.decorators.csrf import csrf_exempt
+from .models import roomMember
+import random
 import time
+import json
+
 # Create your views here.
 
 def getToken(request):
@@ -35,3 +39,23 @@ def index(request):
 
 def room(request):
     return render(request, 'chat/room.html')
+
+@csrf_exempt
+def createUser(request):
+    data = json.loads(request.body)
+    member, created = roomMember.objects.get_or_create(name=data['name'], room_name=data['room_name'], uid=data['uid'])
+    return JsonResponse({'name':data['name']}, safe=False)
+
+def getMember(request):
+    uid = request.GET.get('uid')
+    room_name = request.GET.get('room_name')
+
+    member = roomMember.objects.get(room_name=room_name, uid=uid)
+    return JsonResponse({'name': member.name}, safe=False)
+
+@csrf_exempt
+def deleteMember(request):
+    data = json.loads(request.body)
+    member = roomMember.objects.get(name=data['name'], room_name=data['room_name'], uid=data['uid'])
+    member.delete()
+    return JsonResponse({'name':"member deleted!"}, safe=False)

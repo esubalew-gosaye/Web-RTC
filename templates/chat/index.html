@@ -1,14 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tele-Hakim Zoom</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Chat | Home Page</title>
 </head>
 <body>
-    <h2>
-        <em>Basic configration</em>
-    </h2>
+    <div class="content">
+        <div class="zoom">
+            <img src="{% static 'images/zoom.png'%}" alt="Image Not Found">
+        </div>
+        <div class="selection">
+            <div class="select" id="room-id">
+                <a href="">I need a room ID</a>
+            </div>
+            <div class="select" id="room-id">
+                <span>: AuXman</span>
+            </div>
+        </div>
+        <div class="select">
+            <a href="">I have already a room ID</a>
+        </div>
+
+        <div class="info">
+            <p>In Production the room Id will sent to the patient and doctors through their email.</p>
+            <p>If you are new comer press <b>I need a room Id</b> it will generate room id for you</p>
+            <p><em>Note: </em>I focused mainly on the backend development.</p>
+        </div>
+    </div>
 </body>
 </html>

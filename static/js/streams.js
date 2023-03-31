@@ -1,4 +1,6 @@
-const APP_ID = "484e7765377f417fa9f98b2a096f2494"
+
+const APP_ID = "YOUR_APP_ID"
+
 const CHANNEL_NAME = sessionStorage.getItem("room")
 const TOKEN = sessionStorage.getItem("token")
 let UID = sessionStorage.getItem("uid");
@@ -35,7 +37,7 @@ let joinAndDisplayLS = async () => {
 
     localTracks[1].play(`user-${UID}`)
     localTracks[0].play()
-pip
+
     await client.publish([localTracks[0], localTracks[1]])
 }
 

@@ -10,8 +10,8 @@ import json
 # Create your views here.
 
 def getToken(request):
-    APP_ID = "484e7765377f417fa9f98b2a096f2494"
-    APP_CERTIFICATE = "976c6eb6a7d4482fb5a57bacc2cf47c5"
+    APP_ID = "YOUR_APP_ID"
+    APP_CERTIFICATE = "YOUR_APP_CERTIFICATE"
     CHANNEL_NAME = request.GET.get('channel')
     uid = random.randint(1, 230)
 

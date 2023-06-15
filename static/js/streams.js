@@ -1,5 +1,5 @@
 
-const APP_ID = "YOUR_APP_ID"
+const APP_ID = "484e7765377f417fa9f98b2a096f2494"
 
 const CHANNEL_NAME = sessionStorage.getItem("room")
 const TOKEN = sessionStorage.getItem("token")
@@ -28,15 +28,14 @@ let joinAndDisplayLS = async () => {
     
     let member = await createMember()
 
-    let player = `<div class="video-container" id="user-container-${UID}"> 
-    <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
-    <div class="video-player" id="user-${UID}"></div>
+    let player = `<div class="video-container" id="user-container-${UID}">
+        <div class="video-player" id="user-${UID}"></div>
+        <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
     </div>`;
 
     document.getElementById("video-streams").insertAdjacentHTML("beforeend", player)
 
     localTracks[1].play(`user-${UID}`)
-    localTracks[0].play()
 
     await client.publish([localTracks[0], localTracks[1]])
 }
@@ -60,52 +59,49 @@ let handledUserJoined = async (user, mediaType) =>{
         document.getElementById("video-streams").insertAdjacentHTML("beforeend", player)
 
         user.videoTrack.play(`user-${user.uid}`)
-        if(mediaType === 'audio'){
+        user.audioTrack.play()
+
+        if (mediaType === 'audio'){
             user.audioTrack.play()
         }
     }
 }
 
-let handledUserLeft = (user) =>{
-    let player = document.getElementById(`user-container-${user.uid}`)
-    if(player != null){
-        player.remove() 
-    }
+let handledUserLeft = async (user) =>{
     delete remoteUsers[user.uid]
+    document.getElementById(`user-container-${user.uid}`).remove()
 }
 
 let leaveAndRemoveLS = async () => {
-    for (trackName in localTracks) {
-        let track = localTracks[trackName]
-        if (track) {
-            track.stop()
-            track.close()
-            localTracks[trackName] = undefined
-        }
+    for (let i=0; localTracks.length > i; i++){
+        localTracks[i].stop()
+        localTracks[i].close()
     }
 
     await client.leave()
+    //This is somewhat of an issue because if user leaves without actaull pressing leave button, it will not trigger
     deleteMember()
-
-    window.open("/", "_self")
+    window.open('/', '_self')
 } 
 
 let toggleCamera = async (e) => {
+    console.log('TOGGLE CAMERA TRIGGERED')
     if(localTracks[1].muted){
         await localTracks[1].setMuted(false)
-        e.target.style.backgroundColor = "#fff"   
+        e.target.style.backgroundColor = '#fff'
     }else{
         await localTracks[1].setMuted(true)
-        e.target.style.backgroundColor = "rgb(255, 80, 80, 1)"
+        e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
     }
 }
 let toggleMic = async (e) => {
+    console.log('TOGGLE MIC TRIGGERED')
     if(localTracks[0].muted){
         await localTracks[0].setMuted(false)
-        e.target.style.backgroundColor = "#fff"   
+        e.target.style.backgroundColor = '#fff'
     }else{
         await localTracks[0].setMuted(true)
-        e.target.style.backgroundColor = "rgb(255, 80, 80, 1)"
+        e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
     }
 }
 
@@ -121,15 +117,15 @@ let createMember = async () => {
     return data
 }
 let deleteMember = async () => {
-    let response = await fetch("/delete_member/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({'name': username, 'room_name': CHANNEL_NAME, 'uid': UID })
-    })
-    let data = await response.json()
-}
+     let response = await fetch("/delete_member/", {
+         method: "POST",
+         headers: {
+             "Content-Type": "application/json"
+         },
+         body: JSON.stringify({'name': username, 'room_name': CHANNEL_NAME, 'uid': UID })
+     })
+     let data = await response.json()
+ }
 let getMember = async (user) => { 
     let response = await fetch(`/get_member/?uid=${user.uid}&room_name=${CHANNEL_NAME}`)
     let data = await response.json()
